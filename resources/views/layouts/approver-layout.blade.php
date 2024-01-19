@@ -42,7 +42,7 @@
                             <a class="nav-link" href="#">Appointments Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Services Table</a>
+                            <a class="nav-link" href={{ route('services.index') }}>Services Table</a>
                         </li>
                         <li class="nav-item">
                             <form action="{{ route('approver.logout') }}" method="POST" enctype="multipart/form-data">

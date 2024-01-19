@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApproverLoginController;
 use App\Http\Controllers\ApproverController;
 use App\Http\Controllers\PatientLoginController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Internal;
@@ -64,6 +65,9 @@ Route::prefix('internal/approver')->group(function () {
     Route::middleware('approver')->group(function () {
         Route::get('/index', [ApproverController::class, 'index'])->name('approver.index');
         Route::post('/logout', [ApproverLoginController::class, 'logout'])->name('approver.logout');
+        Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+        Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
+        Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
     });
 });
 
