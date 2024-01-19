@@ -85,6 +85,7 @@ Route::prefix('internal/approver')->group(function () {
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
         Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
         Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
+        Route::get('/table/patient/index', [ApproverController::class, 'patient_index'])->name('approver.patient.index');
     });
 });
 
