@@ -22,7 +22,7 @@
     <div>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href={{ route('admin.index') }}>
                     <img src={{ asset('img/logo-white.png') }} alt="Radappoint Logo" class="navbar-logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navbarNavDropdown">
                     <ul class="navbar-nav gap-4">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href={{ route('admin.index') }}>Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Admins Table</a>

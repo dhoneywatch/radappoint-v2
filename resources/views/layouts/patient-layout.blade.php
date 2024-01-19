@@ -22,7 +22,7 @@
     <div>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href={{ route('patient.index') }}>
                     <img src={{ asset('img/logo-white.png') }} alt="Radappoint Logo" class="navbar-logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -32,6 +32,9 @@
                 </button>
                 <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navbarNavDropdown">
                     <ul class="navbar-nav gap-4">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href={{ route('patient.index') }}>Home</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Appointments Table</a>
                         </li>
