@@ -1,0 +1,12 @@
+.navbar-logo {
+    height: 2rem;
+    width: auto;
+}
+
+.navbar {
+    background-color: #2E4ED8;
+}
+
+nav li a{
+    color: white !important;
+}
