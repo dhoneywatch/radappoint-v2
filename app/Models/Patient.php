@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Carbon;
 
 
 class Patient extends Authenticatable
@@ -55,4 +56,10 @@ class Patient extends Authenticatable
     {
         return "{$this->last_name}, {$this->first_name} {$this->middle_name}";
     }
+
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->birthdate)->age;
+    }
+
 }

@@ -38,7 +38,7 @@
                             <a class="nav-link active" aria-current="page" href={{ route('approver.index') }}>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Patients Table</a>
+                            <a class="nav-link" href={{ route('approver.patient.index') }}>Patients Table</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Appointments Table</a>
