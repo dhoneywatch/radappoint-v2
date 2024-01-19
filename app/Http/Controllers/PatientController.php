@@ -10,4 +10,5 @@ class PatientController extends Controller
     {
         return view('patient.index');
     }
+
 }
