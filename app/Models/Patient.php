@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -13,6 +14,7 @@ use Illuminate\Support\Carbon;
 class Patient extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +62,11 @@ class Patient extends Authenticatable
     public function getAgeAttribute()
     {
         return Carbon::parse($this->birthdate)->age;
+    }
+
+    public function appointment()
+    {
+        return $this->hasMany(Appointment::class);
     }
 
 }

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->string('modality_code');
-            $table->string('procedure_code');
-            $table->string('procedure_name');
-            $table->float('price');
+            $table->foreignId('slot_id')->constrained('slots');
+            $table->string('request_image');
+            $table->tinyInteger('status')->default(0); //0 - booked; 1 - confirmed; 2 - cancelled/declined; 3 - served; 4 - absent
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('appointments');
     }
 };

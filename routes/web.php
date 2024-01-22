@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ApproverLoginController;
 use App\Http\Controllers\ApproverController;
 use App\Http\Controllers\PatientLoginController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SlotController;
 use App\Http\Middleware\Internal;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +43,12 @@ Route::prefix('patient')->group(function () {
     Route::middleware('patient')->group(function () {
         Route::get('/index', [PatientController::class, 'index'])->name('patient.index');
         Route::post('/logout', [PatientLoginController::class, 'logout'])->name('patient.logout');
+        Route::get('/appointment/create', [AppointmentController::class, 'create'])->name('appointment.create');
+        Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+        Route::get('/appointment/index', [AppointmentController::class, 'patient_index'])->name('patient.appointment.index');
+        Route::get('/appointment/{appointment:id}/edit', [AppointmentController::class, 'edit'])->name('patient.appointment.edit');
+        Route::patch('/appointment/{appointment:id}', [AppointmentController::class, 'update'])->name('patient.appointment.update');
+        Route::get('appointment/{appointment:id}', [AppointmentController::class, 'cancel'])->name('patient.appointment.cancel');
     });
 });
 
@@ -85,7 +93,17 @@ Route::prefix('internal/approver')->group(function () {
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
         Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
         Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
+        Route::get('/services/edit', [ServiceController::class, 'edit'])->name('services.edit');
         Route::get('/table/patient/index', [ApproverController::class, 'patient_index'])->name('approver.patient.index');
+        Route::get('/slots/create', [SlotController::class, 'create'])->name('slots.create');
+        Route::get('/slots/index', [SlotController::class, 'index'])->name('slots.index');
+        Route::post('/slots', [SlotController::class, 'store'])->name('slots.store');
+        Route::get('/slots/{slot:id}', [SlotController::class, 'update'])->name('slots.update');
+        Route::get('/appointment/index', [AppointmentController::class, 'approver_appointment'])->name('approver.appointment.index');
+        Route::get('appointment/{appointment:id}/decline', [AppointmentController::class, 'decline'])->name('appointment.decline');
+        Route::get('appointment/{appointment:id}/confirm', [AppointmentController::class, 'confirm'])->name('appointment.confirm');
+        Route::get('appointment/{appointment:id}/served', [AppointmentController::class, 'served'])->name('appointment.served');
+        Route::get('appointment/{appointment:id}/absent', [AppointmentController::class, 'absent'])->name('appointment.absent');
     });
 });
 

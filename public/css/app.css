@@ -10,3 +10,7 @@
 nav li a{
     color: white !important;
 }
+
+tr {
+    vertical-align: middle;
+}

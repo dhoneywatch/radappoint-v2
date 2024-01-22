@@ -3,11 +3,6 @@
     <form action="{{ route('approver.confirm.login') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="container">
-            @if (Session::has('message'))
-                <div class="alert alert-primary" role="alert">
-                    {{ session::get('message') }}
-                </div>
-            @endif
             <h1 class="text-center">Approver User Login</h1>
             <div class="row mb-3">
                 <x-form.input name="email" descriptiveName="Email" type="email" />
