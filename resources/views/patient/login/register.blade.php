@@ -1,18 +1,9 @@
 @extends('layouts.general-layout')
 @section('contents')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <form action={{ route('patient.confirm.register') }} method="POST" enctype="multipart/form-data">
         @csrf
         <div class="container">
-            <h1 class="text-center">Register an Approver</h1>
+            <h1 class="text-center">Register here</h1>
             <div class="row mb-3">
                 <x-form.input name="last_name" descriptiveName="Last Name *" />
             </div>

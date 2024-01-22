@@ -4,11 +4,6 @@
         <h1>Import Services</h1>
         <form action="{{ route('services.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @if (session('message'))
-                <div class="alert alert-primary" role="alert">
-                    {{ session('message') }}
-                </div>
-            @endif
             <div class="mb-3">
                 <label for="formFile" class="form-label">Import .csv file:</label>
                 <input class="form-control" type="file" id="formFile" name="file">

@@ -38,10 +38,10 @@
                             <a class="nav-link active" aria-current="page" href={{ route('patient.index') }}>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Appointments Table</a>
+                            <a class="nav-link active" aria-current="page" href={{ route('patient.appointment.index') }}>My Appointments</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">New Appointments</a>
+                            <a class="nav-link" href={{ route('appointment.create') }}>New Appointments</a>
                         </li>
                         <li class="nav-item">
                             <form action="{{ route('patient.logout') }}" method="POST" enctype="multipart/form-data">
@@ -55,7 +55,21 @@
                 </div>
             </div>
         </nav>
-        <main>
+        <main class="container">
+            @if (session('message'))
+                <div class="alert alert-primary" role="alert">
+                    {{ session('message') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @yield('contents')
         </main>
 

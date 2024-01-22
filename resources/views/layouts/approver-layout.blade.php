@@ -15,6 +15,10 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
     @yield('styles')
 
@@ -35,16 +39,16 @@
                 <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navbarNavDropdown">
                     <ul class="navbar-nav gap-4">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href={{ route('approver.index') }}>Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href={{ route('approver.patient.index') }}>Patients Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Appointments Table</a>
+                            <a class="nav-link" href={{ route('approver.appointment.index') }}>Appointments</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href={{ route('services.index') }}>Services Table</a>
+                            <a class="nav-link" href={{ route('services.index') }}>Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href={{ route('slots.index') }}>Manage Slots</a>
                         </li>
                         <li class="nav-item">
                             <form action="{{ route('approver.logout') }}" method="POST" enctype="multipart/form-data">
@@ -58,11 +62,26 @@
                 </div>
             </div>
         </nav>
-        <main>
+        <main class="container">
+            @if (session('message'))
+                <div class="alert alert-primary" role="alert">
+                    {{ session('message') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @yield('contents')
         </main>
-
     </div>
+
+    @yield('scripts')
 </body>
 
 </html>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Approver;
 use App\Models\Patient;
+use App\Models\Appointment;
 use Illuminate\Validation\Rule;
 
 
@@ -66,13 +67,13 @@ class AdminController extends Controller
     {
         $attributes = $this->validate_admin($admin);
         $admin->update($attributes);
-        return redirect()->route('admin.admin.index')->with('success', 'Successfully updated user information!');
+        return redirect()->route('admin.admin.index')->with('message', 'Successfully updated user information!');
     }
 
     public function admin_destroy($id) {
         $admin = Admin::findOrFail($id);
         $admin->delete();
-        return redirect()->route('admin.admin.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.admin.index')->with('message', 'User deleted successfully.');
     }
 
     // Approver Table Controller
@@ -92,7 +93,7 @@ class AdminController extends Controller
     {
         $attributes = $this->validate_approver();
         Approver::create($attributes);
-        return redirect(route('admin.approver.index'))->with('success', 'User registered successfully.');
+        return redirect(route('admin.approver.index'))->with('message', 'User registered successfully.');
     }
 
     protected function validate_approver(?Approver $approver = null): array
@@ -122,15 +123,15 @@ class AdminController extends Controller
 
     public function approver_update(Approver $approver)
     {
-        $attributes = $this->validate_user($approver);
+        $attributes = $this->validate_approver($approver);
         $approver->update($attributes);
-        return redirect()->route('admin.approver.index')->with('success', 'Successfully updated user information!');
+        return redirect()->route('admin.approver.index')->with('message', 'Successfully updated user information!');
     }
 
     public function approver_destroy($id) {
         $approver = Approver::findOrFail($id);
         $approver->delete();
-        return redirect()->route('admin.approver.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.approver.index')->with('message', 'User deleted successfully.');
     }
 
     // Patient Table Controller
@@ -144,7 +145,9 @@ class AdminController extends Controller
     public function patient_destroy($id) {
         $patient = Patient::findOrFail($id);
         $patient->delete();
-        return redirect()->route('admin.patient.index')->with('success', 'User deleted successfully.');
+
+        Appointment::where('patient_id', '=', $id)->delete();
+        return redirect()->route('admin.patient.index')->with('message', 'User deleted successfully.');
     }
 
 }
