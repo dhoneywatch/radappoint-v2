@@ -12,6 +12,7 @@
                     <th scope="col">Procedure Name</th>
                     <th scope="col">Date</th>
                     <th scope="col">Timeslot</th>
+                    <th scope="col">Request</th>
                     <th scope="col">Booking Status</th>
                     <th scope="col">Update Status</th>
                 </tr>
@@ -35,6 +36,8 @@
                         <td>{{ $appointment->slot->service->procedure_name }}</td>
                         <td>{{ $appointment->slot->date }}</td>
                         <td>{{ $appointment->slot->timeslot }}</td>
+                        <td><img src={{ asset($appointment->request_image) }} width='50' height='50' alt="request">
+                            </td>
                         <td>
                             @if ($appointment->status == 0)
                                 In progress

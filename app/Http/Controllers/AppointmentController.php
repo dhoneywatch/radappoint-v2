@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingPaymentMail;
+use App\Mail\ConfirmationMail;
+use App\Mail\DeclineMail;
+use App\Mail\EditBookingMail;
 use App\Models\Appointment;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Models\Slot;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
 {
@@ -33,9 +39,9 @@ class AppointmentController extends Controller
             'request_image' => 'Request from a physician is required.'
         ]);
 
-        $path1 = $request->file('request_image')->store('temp');
-        $path = storage_path('app') . '/' . $path1;
-        $attributes['request_image'] = $path;
+        $filename = $request->file('request_image')->getClientOriginalName();
+        $path = $request->file('request_image')->storeAs('images', $filename, 'public');
+        $attributes['request_image'] = '/storage/'.$path;
         $attributes['slot_id'] = $request->input('slot_id');
         Appointment::create($attributes);
 
@@ -44,6 +50,20 @@ class AppointmentController extends Controller
         if ($slot) {
             $slot->update(['is_closed' => 1]);
         }
+
+        $recipient = Patient::where('id', '=', $attributes['patient_id'])->first();
+        $schedule = Slot::where('id', '=', $attributes['slot_id'])->first();
+        $data = [
+            'name' => $recipient->first_name,
+            'procedure' => $schedule->service->procedure_name,
+            'date' => $schedule->date,
+            'timeslot' => $schedule->timeslot,
+            'price' => $schedule->service->price,
+            'modality' => $schedule->service->modality_code,
+        ];
+
+        Mail::to($recipient->email)->send(new BookingPaymentMail($data));
+
         return redirect()->route('patient.appointment.index')->with('message', 'Appointment booked successfully. Kindly check your email for payment details.');
     }
 
@@ -52,7 +72,7 @@ class AppointmentController extends Controller
     {
         $currentUser =  Auth::guard('patient')->user()->id;
         return view('patient.appointment.index', [
-            'appointments' => Appointment::where('patient_id', $currentUser)->orderBy('updated_at', 'DESC')->get()
+            'appointments' => Appointment::where('patient_id', $currentUser)->orderBy('created_at', 'DESC')->get()
         ]);
     }
 
@@ -84,9 +104,9 @@ class AppointmentController extends Controller
             $previousSlot->update(['is_closed' => 0]);
         }
 
-        $path1 = request()->file('request_image')->store('temp');
-        $path = storage_path('app') . '/' . $path1;
-        $attributes['request_image'] = $path;
+        $filename = $request->file('request_image')->getClientOriginalName();
+        $path = $request->file('request_image')->storeAs('images', $filename, 'public');
+        $attributes['request_image'] = '/storage/'.$path;
         $attributes['slot_id'] = request()->input('slot_id');
 
         $previousAppointment->update($attributes);
@@ -95,6 +115,19 @@ class AppointmentController extends Controller
         if($newSlot) {
             $newSlot->update(['is_closed' => 1]);
         }
+
+        $recipient = Patient::where('id', '=', $attributes['patient_id'])->first();
+        $schedule = Slot::where('id', '=', $attributes['slot_id'])->first();
+        $data = [
+            'name' => $recipient->first_name,
+            'procedure' => $schedule->service->procedure_name,
+            'date' => $schedule->date,
+            'timeslot' => $schedule->timeslot,
+            'price' => $schedule->service->price,
+            'modality' => $schedule->service->modality_code,
+        ];
+
+        Mail::to($recipient->email)->send(new EditBookingMail($data));
 
         return redirect()->route('patient.appointment.index')->with('message', 'Booking edited successfully.');
     }
@@ -126,6 +159,18 @@ class AppointmentController extends Controller
             $slot->update(['is_closed' => 0]);
         }
 
+        $recipient = Patient::where('id', '=', $appointment['patient_id'])->first();
+        $schedule = Slot::where('id', '=', $appointment['slot_id'])->first();
+        $data = [
+            'name' => $recipient->first_name,
+            'procedure' => $schedule->service->procedure_name,
+            'date' => $schedule->date,
+            'timeslot' => $schedule->timeslot,
+            'price' => $schedule->service->price,
+            'modality' => $schedule->service->modality_code,
+        ];
+
+        Mail::to($recipient->email)->send(new DeclineMail($data));
         return back()->with('message', 'Appointment declined.');
     }
 
@@ -135,6 +180,20 @@ class AppointmentController extends Controller
             $appointment->update(['status' => 1]);
         }
 
+        $recipient = Patient::where('id', '=', $appointment['patient_id'])->first();
+        $schedule = Slot::where('id', '=', $appointment['slot_id'])->first();
+        $data = [
+            'id' => $appointment->id,
+            'name' => $recipient->first_name,
+            'procedure' => $schedule->service->procedure_name,
+            'date' => $schedule->date,
+            'timeslot' => $schedule->timeslot,
+            'price' => $schedule->service->price,
+            'modality' => $schedule->service->modality_code,
+            'procedure_code' => $schedule->service->procedure_code,
+        ];
+
+        Mail::to($recipient->email)->send(new ConfirmationMail($data));
         return back()->with('message', 'Appointment confirmed.');
     }
 
