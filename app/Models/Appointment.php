@@ -14,6 +14,8 @@ class Appointment extends Model
         'request_image',
         'status',
         'patient_id',
+        'payment_image',
+        'is_paid'
     ];
 
     public function slot()

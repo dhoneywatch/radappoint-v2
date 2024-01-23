@@ -37,7 +37,7 @@
                 <h4>Appointment Details:</h4>
                 <ul>
                     <li><b>Appointment ID:</b> {{ $data['id']}}</li>
-                    <li><b>Patient Name:</b> {{ $data['name']}}</li>
+                    <li><b>Patient Name:</b> {{ $data['name']}} {{ $data['last'] }}</li>
                     <li><b>Modality Code:</b> {{ $data['modality']}}</li>
                     <li><b>Procedure Code:</b> {{ $data['procedure_code']}}</li>
                     <li><b>Procedure Name:</b> {{ $data['procedure']}}</li>

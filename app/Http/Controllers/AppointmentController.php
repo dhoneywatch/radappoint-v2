@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Contracts\Mail\Mailable;
 use App\Mail\BookingPaymentMail;
 use App\Mail\ConfirmationMail;
 use App\Mail\DeclineMail;
@@ -41,7 +41,7 @@ class AppointmentController extends Controller
 
         $filename = $request->file('request_image')->getClientOriginalName();
         $path = $request->file('request_image')->storeAs('images', $filename, 'public');
-        $attributes['request_image'] = '/storage/'.$path;
+        $attributes['request_image'] = '/storage/' . $path;
         $attributes['slot_id'] = $request->input('slot_id');
         Appointment::create($attributes);
 
@@ -106,13 +106,13 @@ class AppointmentController extends Controller
 
         $filename = $request->file('request_image')->getClientOriginalName();
         $path = $request->file('request_image')->storeAs('images', $filename, 'public');
-        $attributes['request_image'] = '/storage/'.$path;
+        $attributes['request_image'] = '/storage/' . $path;
         $attributes['slot_id'] = request()->input('slot_id');
 
         $previousAppointment->update($attributes);
 
         $newSlot = Slot::where('id', '=', $attributes['slot_id'])->first();
-        if($newSlot) {
+        if ($newSlot) {
             $newSlot->update(['is_closed' => 1]);
         }
 
@@ -132,30 +132,62 @@ class AppointmentController extends Controller
         return redirect()->route('patient.appointment.index')->with('message', 'Booking edited successfully.');
     }
 
-    public function cancel($id) {
+    public function payment(Appointment $appointment)
+    {
+        return view('patient.appointment.payment', [
+            'appointment' => $appointment
+        ]);
+    }
+
+    public function confirm_payment(Request $request, $id)
+    {
+        $attributes = $this->validate($request, [
+            'payment_image' => [
+                'required',
+                'image',
+                'mimes:png,jpg,jpeg'
+            ]
+        ]);
+        $previousAppointment = Appointment::findOrFail($id);
+        $filename = $request->file('payment_image')->getClientOriginalName();
+        $path = $request->file('payment_image')->storeAs('images', $filename, 'public');
+        $attributes['payment_image'] = '/storage/' . $path;
+        $previousAppointment->update($attributes);
+
+        $appointmentEntry = Appointment::where('id', '=', $id)->first();
+        if($appointmentEntry) {
+            $appointmentEntry->update(['is_paid' => 1]);
+        }
+
+        return redirect()->route('patient.appointment.index')->with('message', 'Successfully uploaded proof of payment. Please wait for the confirmation of your appointment.');
+    }
+
+    public function cancel($id)
+    {
         $appointment = Appointment::findOrFail($id);
-        if($appointment) {
+        if ($appointment) {
             $appointment->update(['status' => 2]);
         }
 
         $slotID = $appointment->slot_id;
         $slot = Slot::find($slotID);
-        if($slot){
+        if ($slot) {
             $slot->update(['is_closed' => 0]);
         }
 
         return back()->with('message', 'Appointment cancelled.');
     }
 
-    public function decline($id) {
+    public function decline($id)
+    {
         $appointment = Appointment::findOrFail($id);
-        if($appointment) {
+        if ($appointment) {
             $appointment->update(['status' => 2]);
         }
 
         $slotID = $appointment->slot_id;
         $slot = Slot::find($slotID);
-        if($slot){
+        if ($slot) {
             $slot->update(['is_closed' => 0]);
         }
 
@@ -174,9 +206,10 @@ class AppointmentController extends Controller
         return back()->with('message', 'Appointment declined.');
     }
 
-    public function confirm($id) {
+    public function confirm($id)
+    {
         $appointment = Appointment::findOrFail($id);
-        if($appointment) {
+        if ($appointment) {
             $appointment->update(['status' => 1]);
         }
 
@@ -191,28 +224,11 @@ class AppointmentController extends Controller
             'price' => $schedule->service->price,
             'modality' => $schedule->service->modality_code,
             'procedure_code' => $schedule->service->procedure_code,
+            'last' => $recipient->last_name
         ];
 
         Mail::to($recipient->email)->send(new ConfirmationMail($data));
         return back()->with('message', 'Appointment confirmed.');
-    }
-
-    public function served($id) {
-        $appointment = Appointment::findOrFail($id);
-        if($appointment) {
-            $appointment->update(['status' => 3]);
-        }
-
-        return back()->with('message', 'Patient succesfully served.');
-    }
-
-    public function absent($id) {
-        $appointment = Appointment::findOrFail($id);
-        if($appointment) {
-            $appointment->update(['status' => 4]);
-        }
-
-        return back()->with('message', 'Patient did not arrive on their appointment.');
     }
 
     public function approver_appointment()

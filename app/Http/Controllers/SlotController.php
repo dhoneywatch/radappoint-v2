@@ -35,7 +35,7 @@ class SlotController extends Controller
             'inputs.*.timeslot' => 'required',
         ],[
             'inputs.*.service_id' => 'Procedure is required.',
-            'inputs.*.date' => 'Date is required and needs to be at least three days from now.',
+            'inputs.*.date' => 'Date is required and needs to be at least four days from now.',
             'inputs.*.timeslot' => 'Timeslot is required'
         ]);
 

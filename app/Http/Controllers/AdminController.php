@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Approver;
 use App\Models\Patient;
 use App\Models\Appointment;
+use App\Models\Radiologist;
 use Illuminate\Validation\Rule;
 
 
@@ -76,35 +77,35 @@ class AdminController extends Controller
         return redirect()->route('admin.admin.index')->with('message', 'User deleted successfully.');
     }
 
-    // Approver Table Controller
-    public function approver_index()
+    // Radiologist Table Controller
+    public function radiologist_index()
     {
-        return view('admin.approver-table.index', [
-            'approvers' => Approver::all()
+        return view('admin.radiologist-table.index', [
+            'radiologists' => Radiologist::all()
         ]);
     }
 
-    public function approver_create()
+    public function radiologist_create()
     {
-        return view('admin.approver-table.create');
+        return view('admin.radiologist-table.create');
     }
 
-    public function approver_store()
+    public function radiologist_store()
     {
-        $attributes = $this->validate_approver();
-        Approver::create($attributes);
-        return redirect(route('admin.approver.index'))->with('message', 'User registered successfully.');
+        $attributes = $this->validate_radiologist();
+        Radiologist::create($attributes);
+        return redirect(route('admin.radiologist.index'))->with('message', 'User registered successfully.');
     }
 
-    protected function validate_approver(?Approver $approver = null): array
+    protected function validate_radiologist(?Radiologist $radiologist = null): array
     {
-        $approver ??= new Admin();
+        $radiologist ??= new Radiologist();
         return request()->validate([
             'name' => 'required',
             'email' => [
                 'required',
                 'string',
-                Rule::unique('approvers')->ignore($approver->id),
+                Rule::unique('radiologists')->ignore($radiologist->id),
             ],
             'password' => [
                 'required',
@@ -114,25 +115,84 @@ class AdminController extends Controller
         ]);
     }
 
-    public function approver_edit(Approver $approver)
+    public function radiologist_edit(Radiologist $radiologist)
     {
-        return view('admin.approver-table.edit', [
-            'approver' => $approver,
+        return view('admin.radiologist-table.edit', [
+            'radiologist' => $radiologist,
         ]);
     }
 
-    public function approver_update(Approver $approver)
+    public function radiologist_update(Radiologist $radiologist)
     {
-        $attributes = $this->validate_approver($approver);
-        $approver->update($attributes);
-        return redirect()->route('admin.approver.index')->with('message', 'Successfully updated user information!');
+        $attributes = $this->validate_radiologist($radiologist);
+        $radiologist->update($attributes);
+        return redirect()->route('admin.radiologist.index')->with('message', 'Successfully updated user information!');
     }
 
-    public function approver_destroy($id) {
-        $approver = Approver::findOrFail($id);
-        $approver->delete();
-        return redirect()->route('admin.approver.index')->with('message', 'User deleted successfully.');
+    public function radiologist_destroy($id) {
+        $radiologist = Radiologist::findOrFail($id);
+        $radiologist->delete();
+        return redirect()->route('admin.radiologist.index')->with('message', 'User deleted successfully.');
     }
+
+     // Approver Table Controller
+     public function approver_index()
+     {
+         return view('admin.approver-table.index', [
+             'approvers' => Approver::all()
+         ]);
+     }
+
+     public function approver_create()
+     {
+         return view('admin.approver-table.create');
+     }
+
+     public function approver_store()
+     {
+         $attributes = $this->validate_approver();
+         Approver::create($attributes);
+         return redirect(route('admin.approver.index'))->with('message', 'User registered successfully.');
+     }
+
+     protected function validate_approver(?Approver $approver = null): array
+     {
+         $approver ??= new Approver();
+         return request()->validate([
+             'name' => 'required',
+             'email' => [
+                 'required',
+                 'string',
+                 Rule::unique('approvers')->ignore($approver->id),
+             ],
+             'password' => [
+                 'required',
+                 'string',
+                 'min:8',
+             ]
+         ]);
+     }
+
+     public function approver_edit(Approver $approver)
+     {
+         return view('admin.approver-table.edit', [
+             'approver' => $approver,
+         ]);
+     }
+
+     public function approver_update(Approver $approver)
+     {
+         $attributes = $this->validate_approver($approver);
+         $approver->update($attributes);
+         return redirect()->route('admin.approver.index')->with('message', 'Successfully updated user information!');
+     }
+
+     public function approver_destroy($id) {
+         $approver = Approver::findOrFail($id);
+         $approver->delete();
+         return redirect()->route('admin.approver.index')->with('message', 'User deleted successfully.');
+     }
+
 
     // Patient Table Controller
     public function patient_index()

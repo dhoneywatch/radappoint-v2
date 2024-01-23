@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'patients',
         ],
+        'radiologist' => [
+            'driver' => 'session',
+            'provider' => 'radiologists',
+        ],
     ],
 
     /*
@@ -90,6 +94,10 @@ return [
         'patients' => [
             'driver' => 'eloquent',
             'model' => App\Models\Patient::class,
+        ],
+        'radiologists' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Radiologist::class,
         ],
 
         // 'users' => [

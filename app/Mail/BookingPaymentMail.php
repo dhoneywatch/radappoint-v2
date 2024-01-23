@@ -31,7 +31,7 @@ class BookingPaymentMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Payment Instruction',
+            subject: 'Payment Instructions',
             from: new Address('radappoint.system@gmail.com', 'Radappoint'),
         );
     }
