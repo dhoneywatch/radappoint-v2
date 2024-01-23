@@ -1,3 +1,17 @@
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Barlow', sans-serif;
+    font-weight: bold;
+    color: #2E4ED8;
+}
+p, li, a {
+    font-family: 'Barlow', sans-serif;
+}
+
 .navbar-logo {
     height: 2rem;
     width: auto;
@@ -31,3 +45,46 @@ h1 {
     margin-bottom: 2rem;
 }
 
+.home-logo {
+    height: 20rem;
+    width: auto;
+}
+
+.hero-right {
+    width: 25rem;
+}
+
+.hero-h1 {
+    font-size: 4.5rem;
+    margin-bottom: 0;
+}
+.hero-right p {
+    text-align: justify;
+}
+
+.hero {
+    margin-top: 10rem;
+}
+
+nav li:hover {
+    font-weight: bold;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.card {
+    background-color: white;
+    border-style: solid;
+    border-width: 2.5px;
+    border-color: #2E4ED8;
+    color: #2E4ED8;
+    font-size: 3rem;
+    text-align: center;
+    width: 18rem;
+    border-radius: 0.5rem;
+}
+
+.card:hover {
+    background-color: #2E4ED8;
+    color: white;
+    transition: 0.5s;
+}

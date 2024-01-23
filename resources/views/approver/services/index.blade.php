@@ -3,7 +3,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Services Table</h1>
-            <a href={{ route('services.create') }}>Import</a>
+            <a href={{ route('services.create') }} class="btn btn-sm btn-primary">Import</a>
         </div>
         <div class="table-responsive">
             <table class="table">
