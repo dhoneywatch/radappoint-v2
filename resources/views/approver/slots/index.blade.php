@@ -3,7 +3,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Slots Table</h1>
-            <a href={{ route('slots.create') }}>Add Slot</a>
+            <a href={{ route('slots.create') }} class="btn btn-sm btn-primary">Add Slot</a>
             {{-- <a href={{ route('services.edit') }}>Update</a> --}}
         </div>
         <div class="table-responsive">

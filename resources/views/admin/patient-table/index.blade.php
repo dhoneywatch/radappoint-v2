@@ -1,7 +1,7 @@
 @extends('layouts.admin-layout')
 @section('contents')
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-center align-items-center">
             <h1>Patients Table</h1>
         </div>
         <div class="table-responsive">

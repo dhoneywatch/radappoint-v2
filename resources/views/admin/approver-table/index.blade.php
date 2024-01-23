@@ -3,7 +3,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Approvers Table</h1>
-            <a href={{ route('admin.approver.create') }}>New approver</a>
+            <a href={{ route('admin.approver.create') }} class="btn btn-sm btn-primary">New approver</a>
         </div>
         <div class="table-responsive">
             <table class="table">

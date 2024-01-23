@@ -3,7 +3,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Radiologists Table</h1>
-            <a href={{ route('admin.radiologist.create') }}>New Radiologist</a>
+            <a href={{ route('admin.radiologist.create') }}  class="btn btn-sm btn-primary"> New Radiologist</a>
         </div>
         <table class="table">
             <thead>
