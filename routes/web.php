@@ -69,8 +69,8 @@ Route::prefix('patient')->group(function () {
 });
 
 Route::prefix('internal/admin')->group(function () {
-    // Route::get('/register', [AdminLoginController::class, 'register'])->name('admin.register');
-    // Route::post('/register/admin', [AdminLoginController::class, 'confirm_register'])->name('admin.confirm.register');
+    Route::get('/register', [AdminLoginController::class, 'register'])->name('admin.register');
+    Route::post('/register/admin', [AdminLoginController::class, 'confirm_register'])->name('admin.confirm.register');
     Route::get('/login', [AdminLoginController::class, 'login'])->name('admin.login');
     Route::post('/login/admin', [AdminLoginController::class, 'confirm_login'])->name('admin.confirm.login');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
