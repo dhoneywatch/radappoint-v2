@@ -14,7 +14,6 @@
                 RadAppoint streamlines the process of scheduling and managing appointments for radiological services,
                 offering a seamless experience for both healthcare providers and patients.
 
-
             </p>
         </div>
     </div>
