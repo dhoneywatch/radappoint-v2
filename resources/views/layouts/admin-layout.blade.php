@@ -44,6 +44,9 @@
                             <a class="nav-link" href={{ route('admin.approver.index') }}>Approvers Table</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href={{ route('admin.radiologist.index') }}>Radiologists Table</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href={{ route('admin.patient.index') }}>Patients Table</a>
                         </li>
                         <li class="nav-item">

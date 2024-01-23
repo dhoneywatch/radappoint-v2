@@ -45,6 +45,9 @@
                             <a class="nav-link" href={{ route('approver.appointment.index') }}>Appointments</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href={{ route('assignment.index') }}>Assignments</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href={{ route('services.index') }}>Services</a>
                         </li>
                         <li class="nav-item">

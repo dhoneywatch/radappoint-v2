@@ -5,7 +5,7 @@
             @csrf
             @method('PATCH')
             <div class="container">
-                <h1 class="text-center">Edit Approver Information</h1>
+                <h1 class="text-center mb-5">Edit Approver Information</h1>
                 <div class="row mb-3">
                     <x-form.input name="name" descriptiveName="Full Name *" :value="old('name', $approver->name)"/>
                 </div>
@@ -18,7 +18,7 @@
                 <div class="row mb-3">
                     <x-form.input name="password_confirmation" descriptiveName="Confirm Password *" type="password" :value="old('password', $approver->password)" />
                 </div>
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
