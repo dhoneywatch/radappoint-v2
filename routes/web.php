@@ -12,6 +12,7 @@ use App\Http\Controllers\PatientLoginController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SlotController;
 use App\Http\Middleware\Internal;
 use App\Models\Admin;
@@ -128,6 +129,10 @@ Route::prefix('internal/approver')->group(function () {
         Route::get('appointment/{appointment:id}/assign', [AssignmentController::class, 'create'])->name('appointment.assign');
         Route::post('appointment/{appointment:id}', [AssignmentController::class, 'store'])->name('patient.appointment.assignment');
         Route::get('assignment/index', [AssignmentController::class, 'index'])->name('assignment.index');
+        Route::get('room/create', [RoomController::class, 'create'])->name('room.create');
+        Route::post('room', [RoomController::class, 'store'])->name('room.store');
+        Route::get('room/index', [RoomController::class, 'index'])->name('room.index');
+        Route::delete('room/{room:id}', [RoomController::class, 'destroy'])->name('room.delete');
     });
 });
 

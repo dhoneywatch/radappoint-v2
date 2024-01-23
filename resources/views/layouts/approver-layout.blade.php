@@ -62,6 +62,9 @@
                             <a class="nav-link" href={{ route('slots.index') }}>Manage Slots</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href={{ route('room.index') }}>Rooms</a>
+                        </li>
+                        <li class="nav-item">
                             <form action="{{ route('approver.logout') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <a class="nav-link" href="{{ route('approver.logout') }}"

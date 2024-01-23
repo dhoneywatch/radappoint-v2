@@ -11,6 +11,10 @@ class Room extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'room'
+    ];
+
     public function assignment()
     {
         return $this->hasMany(Assignment::class);
