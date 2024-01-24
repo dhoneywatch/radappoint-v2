@@ -4,7 +4,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <h1>Assignments Table</h1>
         </div>
-        <div class="container table-responsive">
+        <div class="container">
             <table class="table" id="slot_table">
                 <thead>
                     <tr class="text-center">
